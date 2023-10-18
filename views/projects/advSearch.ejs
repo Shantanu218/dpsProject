@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="text-center">Advanced Filter</h1>
+<form action="/projects" method="GET" style="width: 80%; margin: auto;">
+	<div class="form-floating mb-3">
+		<input type="text" class="form-control" id="title" placeholder="foo" name="search[title]">
+		<label for="title">Title</label>
+		<span class="form-file-text text-muted"><i>Title is optional!</i></span>
+	</div>
+
+	<div class="form-floating mb-3">
+		<select class="form-select" id="subjectOptions" name="search[subject]">
+			<option value="" selected disabled>--Please select an option--</option>
+			<option value="Biology">Biology</option>
+			<option value="Chemistry">Chemistry</option>
+			<option value="English">English</option>
+			<option value="Mathematics">Mathematics</option>
+			<option value="Physics">Physics</option>
+		</select>
+		<label for="subjectOptions">Subject</label>
+		<span class="form-file-text text-muted"><i>Subject is optional!</i></span>
+
+	</div>
+
+	<div class="row">
+		<div class="col-6">
+			<div class="form-floating mb-3">
+				<select class="form-select" id="gradeOptions" name="search[grade]">
+					<option value="" selected disabled>--Please select an option--</option>
+					<% for( let index = 1; index < 13; index++ ) { %>
+					<option value="<%= index %>" id="grade<%= index %>">Grade <%= index %></option>
+					<% } %>
+				</select>
+				<label for="gradeOptions">Grade</label>
+				<span class="form-file-text text-muted"><i>Grade is optional!</i></span>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="form-floating mb-3">
+				<select class="form-select" id="sectionOptions" name="search[section]">
+					<option value="" selected disabled id="defOption">--Please select an option--</option>
+
+				</select>
+				<label for="sectionOptions">Section</label>
+				<span class="form-file-text text-muted"><i>Section is optional!</i></span>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="form-floating mb-3">
+		<select class="form-select" id="yearOptions" name="search[year]">
+			<option value="" selected disabled>--Please select an option--</option>
+			<% for(let a = 2010; a < 2040; a++) { %>
+			<option value="<%= a %>" id="year<%= a %>"><%= a %> - <%= a+1 %></option>
+			<% } %>
+		</select>
+		<label for="yearOptions">Academic Year</label>
+		<span class="form-file-text text-muted"><i>Academic Year is optional!</i></span>
+
+	</div>
+
+	<div class="mb-3">
+		<textarea type="text" class="form-control" id="body" style="resize: none; height: 200px;"
+				  placeholder="Search description" name="search[description]"></textarea>
+		<span class="form-file-text text-muted"><i>Description is optional!</i></span>
+
+	</div>
+
+	<button type="submit" class="btn btn-primary">Filter Projects!</button>
+</form>
+
+<script src="/scripts/addSections.js"></script>

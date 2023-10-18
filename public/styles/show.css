@@ -1,0 +1,62 @@
+#projectTitle {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#commenth1 {
+	margin-bottom: 15px;
+}
+
+.col-lg-6 {
+	padding: 40px;
+}
+
+.showTextarea {
+	height: 100px;
+	resize: none;
+	margin-bottom: 10px;
+
+}
+
+#commentBody {
+	resize: none;
+	height: 150px;
+}
+
+.card-img-top {
+	aspect-ratio: 15 / 9;
+	width: 100%;
+}
+
+#mainCard {
+	width: 80%;
+	margin: auto;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+
+
+}
+
+
+.card .card-img-top {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+	.col-lg-6 {
+		padding: 20px 40px;
+	}
+
+}
+
+@media (max-width: 1200px) {
+	#secondDiv {
+		width: 80%;
+		margin: auto;
+		margin-top: 15px
+	}
+}

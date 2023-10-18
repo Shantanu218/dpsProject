@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>DPSIS Project Archive</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+			  integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+		<link rel="stylesheet" href="/styles/home.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> <!-- Including Google API's jQuery -->
+	</head>
+
+	<body class="d-flex text-center text-white bg-dark">
+		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+			<header class="mb-auto">
+				<div>
+					<h3 class="float-md-left mb-0">DPSIS Project Archive</h3>
+					<nav class="nav nav-masthead justify-content-center float-md-right">
+						<a class="nav-link active" aria-current="page" href="/">Home</a>
+						<a class="nav-link" href="/projects">Projects</a>
+						<% if(!currentUser) { %>
+						<a class="nav-link" href="/login">Login</a>
+						<a class="nav-link" href="/register">Register</a>
+						<% } else { %>
+						<a class="nav-link" href="/logout">Logout</a>
+						<% } %>
+					</nav>
+				</div>
+			</header>
+			<main class="px-3">
+				<h1>DPSIS Project Archive</h1>
+				<p class="lead"> Welcome to DPSIS Project Archive! <br> Check out the wonderful projects made by our students. <br>
+					Feel free to add some of your own!</p>
+				<a href="/projects" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
+					Projects</a>
+			</main>
+			<div class="fade-in-image">
+				<img
+					 src="https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80">
+			</div>
+			<footer class="mt-auto text-white-50">
+				<% let date =  new Date().getFullYear(); %>
+				<p>&copy; DPSIS Project Archive <%= date %></p>
+			</footer>
+		</div>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+				integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+				crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+				integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+				crossorigin="anonymous"></script>
+	</body>
+
+</html>
+
+<script>
+	let image = document.querySelector('img')
+	let imageUrls = [
+		'https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+		'http://i.imgur.com/SBEmFpv.jpg',
+		'http://i.imgur.com/TVGe0Ef.jpg',
+		'http://i.imgur.com/2LSMCmJ.jpg'
+	]
+	let a = 0;
+	function change() {
+		image.src = imageUrls[ a ]
+		a++;
+		if (a == imageUrls.length)
+			a = 0;
+	}
+	setTimeout(change, 4990) // Runs function after 4.95 seconds
+	setInterval(change, 5000) // Runs function after 5 seconds
+
+
+</script>

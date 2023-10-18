@@ -1,0 +1,125 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/styles/register.css">
+<!-- Section: Design Block -->
+
+
+<section class="background-radial-gradient" style="margin-top: 100px;">
+	<div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+		<div class="row gx-lg-5 align-items-center mb-5">
+			<div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 8">
+				<h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 85%)">
+					The best place <br />
+					<span style="color: hsl(218, 81%, 75%)">to show your projects</span>
+				</h1>
+				<p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+					Upload your ward's projects and share them with the world today! <br> Browse our archive of projects made
+					by DPSites and add your own by <br> making an account today!
+				</p>
+			</div>
+
+			<div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+				<div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+				<div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+				<div class="card bg-glass" style="width: 80%;">
+					<div class="card-body px-4 py-4 px-md-4">
+						<form action="/reset" method="POST" class="validated-form" novalidate onsubmit="onChange()">
+							<h1 style="margin-bottom: 25px; font-size: 20px; text-align: center;">Reset your password</h1>
+
+							<!-- Username/Email input -->
+							<!-- <div class="form-outline mb-4">
+								<input type="text" id="term" name="term" class="form-control" placeholder="Username or Email Address"
+									   required />
+								<div class="valid-feedback">Looks good!</div>
+								<div class="invalid-feedback">Please enter your email!</div>
+							</div> -->
+
+
+							<!-- Username/Email input -->
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="loginData" placeholder="foo" required name="username">
+								<label for="loginData">Username/Email address</label>
+								<div class="valid-feedback">Looks good!</div>
+								<div class="invalid-feedback">Please enter your username/email address!</div>
+							</div>
+
+							<!-- Password input -->
+							<div class="form-floating mb-3">
+								<input type="password" class="form-control form-control-password" id="password" placeholder="foo" name="password"
+									   required>
+								<label for="password">Password</label>
+								<div class="valid-feedback valid-password-feedback">Looks good!</div>
+								<div class="invalid-feedback invalid-password-feedback">Please enter a password!</div>
+
+							</div>
+
+							<!-- Password input -->
+							<div class="form-floating mb-3">
+								<input type="password" class="form-control form-control-password" id="confirm" placeholder="foo" name="confirm"
+									   required>
+								<label for="confirm">Confirm Password</label>
+								<div class="valid-feedback valid-password-feedback">Looks good!</div>
+								<div class="invalid-feedback invalid-password-feedback">Please re-enter your password!</div>
+							</div>
+
+							<!-- Password input -->
+							<!-- <div class="form-outline mb-4">
+								<input type="password" id="password" name="password" class="form-control form-control-password"
+									   placeholder="New Password" required />
+								<div class="valid-feedback valid-password-feedback">Looks good!</div>
+								<div class="invalid-feedback invalid-password-feedback">Please enter your password!</div>
+							</div> -->
+
+							<!-- Password input -->
+							<!-- <div class="form-outline mb-4">
+								<input type="password" id="confirm" name="confirm" class="form-control form-control-password"
+									   placeholder="Confirm new password" required />
+								<div class="valid-feedback valid-password-feedback">Looks good!</div>
+								<div class="invalid-feedback invalid-password-feedback">Please re-enter your password!</div>
+							</div> -->
+
+							<!-- Submit button -->
+							<div class="d-grid">
+								<button class="btn btn-primary mb-3" type="submit" style="color: white;
+								 font-weight: 500; font-size: 20px;">Get a verification email</button>
+							</div>
+						</form>
+
+						<hr style="border-bottom: 1px solid #dadde1">
+
+						<div class="d-grid gap-2">
+							<form action="/register" method="GET">
+								<div class="d-grid">
+									<button class="btn mb-2" style="background-color: #42B72A; color: white;
+								 font-weight: 500; font-size: 20px;">Create a new account</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+	function onChange() {
+		const inputs = document.querySelectorAll('.form-control-password');
+		const invalidPasswordDivs = document.querySelectorAll('.invalid-password-feedback');
+		const passwordRegex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+
+		if (inputs[ 0 ].value !== inputs[ 1 ].value) {
+			for (let a = 0; a < 2; a++) {
+				inputs[ a ].value = '';
+				invalidPasswordDivs[ a ].innerText = 'Passwords do not match!'
+			}
+		}
+
+		else if ((inputs[ 0 ].value === inputs[ 1 ].value) && !(passwordRegex.test(inputs[ 0 ].value))) {
+			for (let a = 0; a < 2; a++) {
+				inputs[ a ].value = '';
+				invalidPasswordDivs[ a ].innerText = 'Passwords must have at least 8 characters and contain at least 1 of the following: uppercase letters, lowercase letters, numbers, and symbols.'
+			}
+		}
+	}
+</script>

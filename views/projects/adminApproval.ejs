@@ -1,0 +1,72 @@
+<% layout('layouts/boilerplate') %>
+<script>
+	window.history.replaceState(null, null, window.location.pathname); // Removes all the queries from the req.query string
+</script>
+<link rel="stylesheet" href="/styles/index.css">
+
+<% if(projects.length < 1) { %>
+<h1 id="heading">No projects are awaiting approval!</h1>
+<% } else { %>
+<h1 id="heading">ALL PROJECTS!</h1>
+
+<h3 class="text-muted" style="text-align: center;"><i>For teachers only!</i></h3>
+
+
+<div class="row" style="width: 30%; margin: 30px 2% 5px;">
+	<span class="form-file-text text-muted"><i>Sort through our projects here! (Admin route)</i></span>
+	<form action="/admin">
+		<select class="form-select" name="sortData" id="sortData">
+			<option value="" selected disabled>--Please select an option--</option>
+			<option selected disabled hidden>Sort by Alphabetical (A to Z)</option>
+			<option value="atoz">Alphabetical (A to Z)</option>
+			<option value="ztoa">Alphabetical (Z to A)</option>
+			<option value="dateDesc">Date (Newest to Oldest)</option>
+			<option value="dateAsc">Date (Oldest to Newest)</option>
+			<option value="gradeAsc">Grade (Ascending)</option>
+			<option value="gradeDesc">Grade (Descending)</option>
+			<option value="comAsc">Number of comments (Ascending)</option>
+			<option value="comDesc">Number of comments (Descending)</option>
+		</select>
+	</form>
+</div>
+
+<div class="container d-flex" style="flex-direction: row; flex-wrap:wrap;">
+	<% for(let project of projects) { %>
+	<div class="card" id="cardDiv">
+		<% let imgSrc = '/imageNotFound.jpg'; %>
+		<% if(project.images[0] && project.images[0].path !== undefined) { imgSrc = project.images[0].path } %>
+		<img crossorigin="anonymous" src="<%= imgSrc %>" class="card-img-top" alt="Image of the project"
+			 style="width: 100%;">
+		<div class="card-body">
+			<h5 class="card-title" style="text-align: center; margin-bottom: 10px;"><%= project.title %></h5>
+			<p class="card-text">A <%= project.subject %> project by <%= project.owner.username %> (<%= project.grade %> <%= project.section %>).
+				<br>
+				(Academic Year <%= project.year %> - <%= project.year + 1 %>).
+				<br>
+				Created on <%= project.timeCreated %>
+			</p>
+
+			<a href="/projects/<%= project._id %>" class="btn btn-primary">More info</a>
+		</div>
+	</div>
+	<% } %>
+
+
+</div>
+<div style="text-align: right; padding-right: 50px;">
+	<% if(page != 0) { %>
+	<a href="/admin/<%= %>?page=<%= page - 1 %>" class="btn btn-primary">Previous Page</a>
+	<% } %>
+	<a href="/admin/<%= %>?page=<%= page + 1 %>" class="btn btn-primary" style="margin-left: 10px;">Next Page</a>
+
+</div>
+<% } %>
+
+<script>
+	// Submits select onChange of value
+	const select = document.getElementById("sortData");
+
+	if (select != null) {
+		select.addEventListener("change", ({ target }) => target.form.submit());
+	}
+</script>

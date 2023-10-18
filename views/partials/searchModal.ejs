@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div class="modal fade" id="staticModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	 aria-labelledby="staticModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticModalLabel">Quick filter</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" style="padding: 30px;">
+				<form action="/projects" class="wont-be-validated">
+					<div style="margin:20px 0;">
+						<select class="form-select" name="type" required id="quickSelect">
+
+							<option value="" selected disabled>--Please select an option--</option>
+							<option value="grade">Project Grade</option>
+							<option value="subject">Project Subject</option>
+							<option value="title">Project Title</option>
+							<option value="year">Project Year</option>
+						</select>
+						<div class="valid-feedback">Looks good!</div>
+						<div class="invalid-feedback">Please select an option!</div>
+					</div>
+
+					<div style="margin: 20px 0;" id="searchDiv">
+						<input class="form-control" type="text" placeholder="Search term"
+							   aria-label="Search" name="term" required id="searchTerm">
+
+						<div class="valid-feedback">Looks good!</div>
+						<div class="invalid-feedback">Please enter your search term!</div>
+					</div>
+
+					<div style="margin: 20px 0;" id="selOptions">
+						<select class="form-select options" id="subject" required name="subjectOpt">
+							<option value="" selected disabled>--Please select an option--</option>
+							<option value="Biology">Biology</option>
+							<option value="Chemistry">Chemistry</option>
+							<option value="English">English</option>
+							<option value="Mathematics">Mathematics</option>
+							<option value="Physics">Physics</option>
+						</select>
+
+						<select class="form-select options" id="grade" required name="gradeOpt">
+							<option value="" selected disabled>--Please select an option--</option>
+							<% for(let a = 1; a < 13; a++) { %>
+							<option value="<%= a %>" id="grade<%= a %>">Grade <%= a %></option>
+							<% } %>
+						</select>
+						<select class="form-select options" id="year" required name="yearOpt">
+							<option value="" selected disabled>--Please select an option--</option>
+							<% for(let a = 2010; a < 2040; a++) { %>
+							<option value="<%= a %>" id="year<%= a %>"><%= a %> - <%= a+1 %></option>
+							<% } %>
+						</select>
+					</div>
+
+					<div class="d-grid col-4 mx-auto">
+						<button class="btn btn-success">Search</button>
+					</div>
+
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	let options = document.querySelectorAll('.options')
+	let selOptions = document.querySelector('#selOptions')
+	let searchDiv = document.querySelector('#searchDiv')
+	let searchTerm = document.querySelector('#searchTerm')
+	let quickSelect = document.querySelector('#quickSelect')
+
+	selOptions.style.display = 'none'; // Hides div with form-selects
+	searchDiv.style.display = 'block'; // Shows the searchDiv div as default
+
+
+	const quickSearch = function () {
+		selOptions.style.display = 'none'; // Hides div with form-selects
+
+		if (quickSelect.value == 'title') {
+			searchDiv.style.display = 'block'; // Shows the searchDiv div
+			for (let opt of options) {
+				opt.required = false; // Removes required attribute from all form-selects
+			}
+		}
+		else {
+			selOptions.style.display = 'block'; // Shows div with form-selects
+			searchDiv.style.display = 'none'; // Hides the searchDiv div
+
+			for (let opt of options) {
+				opt.style.display = 'none' // Hides all form-selects with a class of option
+				opt.required = false; // Removes required attribute from all form-selects
+				opt.parentElement.style.display = 'none' // Hides parent div with the valid/invalid feedback
+			}
+			searchTerm.required = false; // Removes required attribute from searchTerm
+
+			let value = quickSelect.value // Stores the name of the input that should be visible
+
+			let option = document.getElementById(value) // Selects option to display
+			option.style.display = '';
+			option.parentElement.style.display = 'block'
+			option.required = true;
+			console.log(option)
+		}
+
+	}
+
+	document.getElementById('quickSelect').addEventListener('change', quickSearch);
+
+
+
+</script>

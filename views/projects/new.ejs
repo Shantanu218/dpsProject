@@ -1,0 +1,135 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/styles/previewImages.css" class="rel">
+
+<div class="row">
+	<h1 class="text-center">Create new project</h1>
+	<div class="col-9" style="margin: auto;">
+		<form action="/projects" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="title" placeholder="foo" name="project[title]" required>
+				<label for="title">Title</label>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div class="invalid-feedback">
+					Please provide a title!
+				</div>
+			</div>
+
+			<div class="form-floating mb-3">
+				<select class="form-select" id="subjectOptions" required name="project[subject]">
+					<option value="" selected disabled>--Please select an option--</option>
+					<option value="Biology">Biology</option>
+					<option value="Chemistry">Chemistry</option>
+					<option value="English">English</option>
+					<option value="Mathematics">Mathematics</option>
+					<option value="Physics">Physics</option>
+				</select>
+				<label for="subjectOptions">Subject</label>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div class="invalid-feedback">
+					Please choose a subject!
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<div class="form-floating mb-3">
+						<select class="form-select" id="gradeOptions" required name="project[grade]">
+							<option value="" selected disabled>--Please select an option--</option>
+							<% for( let index = 1; index < 13; index++ ) { %>
+							<option value="<%= index %>" id="grade<%= index %>">Grade <%= index %></option>
+							<% } %>
+						</select>
+						<label for="gradeOptions">Grade</label>
+						<div class="valid-feedback">
+							Looks good!
+						</div>
+						<div class="invalid-feedback">
+							Please choose a grade!
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-3">
+						<select class="form-select" id="sectionOptions" required name="project[section]">
+							<option value="" selected disabled id="defOption">--Please select an option--</option>
+
+						</select>
+						<label for="sectionOptions">Section</label>
+						<div class="valid-feedback">
+							Looks good!
+						</div>
+						<div class="invalid-feedback">
+							Please choose a section!
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-floating mb-3">
+				<select class="form-select" id="yearOptions" required name="project[year]">
+					<option value="" selected disabled>--Please select an option--</option>
+					<% for(let a = 2010; a < 2040; a++) { %>
+					<option value="<%= a %>" id="year<%= a %>"><%= a %> - <%= a+1 %></option>
+					<% } %>
+				</select>
+				<label for="yearOptions">Academic Year</label>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div class="invalid-feedback">
+					Please choose a year!
+				</div>
+			</div>
+
+			<!-- <div class="form-floating mb-3">
+				<input type="text" class="form-control" id="title" placeholder="foo" name="project[image]">
+				<label for="title">Image URL</label>
+			</div> -->
+
+			<div class="mb-3">
+				<div class="custom-file">
+					<label for="images" class="form-label custom-file-label">
+						<span class="form-file-text text-muted">Project images/videos, if any</span></label>
+					<input class="form-control custom-file-input" type="file" id="images" name="image" multiple
+						   onchange="previewMultiple(event), validateSize(event)">
+					<span class="form-file-text text-muted"><i>Make sure your files are
+							under 200MB!</i></span>
+				</div>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div id="formFile">
+				</div>
+				<span id="formFileSpan"></span>
+				<div id="clearDiv" style="display: none; margin-top: 5px;">
+					<button type="button" class="btn btn-danger" onclick="clearAll(this)">Clear all
+						images</button>
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<textarea type="text" class="form-control" id="body" style="resize: none; height: 200px;"
+						  placeholder="Type your project's description here." name="project[description]" required></textarea>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div class="invalid-feedback">
+					Please provide a description!
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Create new project!</button>
+		</form>
+	</div>
+	<a href="/projects">INDEX PAGE</a>
+</div>
+
+<script src="/scripts/addSections.js"></script>
+
+<script src="/scripts/addFileNames.js"></script>
+
+<script src="/scripts/validateSize.js"></script>

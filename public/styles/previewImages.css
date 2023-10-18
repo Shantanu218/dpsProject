@@ -1,0 +1,55 @@
+#formFile {
+	display: flex;
+	flex-wrap: wrap;
+	height: auto;
+}
+
+.form-file-image {
+	border-radius: 10px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+	opacity: 85%;
+}
+
+.container {
+	max-width: 100%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+	.form-file-image {
+		width: 45%;
+		margin: 2.5%;
+		aspect-ratio: 4 / 3;
+	}
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media (min-width: 600px) {
+	.form-file-image {
+		width: 30%;
+		margin: 1.66%;
+		aspect-ratio: 1 / 1;
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media (min-width: 992px) {
+	.form-file-image {
+		aspect-ratio: 4 / 3;
+	}
+}
+
+
+@media (min-width: 1200px) {
+	.form-file-image {
+		width: 23.5%;
+		margin: 0.75%;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1600px and up) */
+@media (min-width: 1600px) {}

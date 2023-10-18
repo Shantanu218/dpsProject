@@ -1,0 +1,215 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/styles/show.css">
+<link rel="stylesheet" href="/styles/stars.css">
+<script>
+	window.history.replaceState(null, null, window.location.pathname); // Removes all the queries from the req.query string
+</script>
+
+<div class="row">
+	<div class="col-xl-6">
+		<h1 id="projectTitle"><%= project.title %></h1>
+		<div class="card mb-3" id="mainCard">
+			<% let imgSrc = '/imageNotFound.jpg'%>
+			<% if(project.images && project.images.length > 1) { %>
+			<div id="carouselDiv" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
+				<div class="carousel-indicators">
+					<% for(let a = 0; a < project.images.length; a++) { %>
+					<button id="indicator<%= a %>" type="button" data-bs-target="#carouselDiv" data-bs-slide-to="<%= a %>"
+							aria-current="true" aria-label="Slide <%= a+1 %>"></button>
+					<% } %>
+				</div>
+				<div class="carousel-inner card-img-top">
+					<% for(let a = 0; a < project.images.length; a++) { %>
+					<% if(project.images[a] != null) { %>
+					<div id="imageDiv<%= a %>" class="carousel-item">
+						<img crossorigin="anonymous" id="image<%= a %>" src="<%= project.images[a].path %>"
+							 class="card-img-top" alt="project image <%= a+1 %>">
+					</div>
+					<% } %>
+					<% } %>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselDiv" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselDiv" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			<% } else if(project.images && project.images.length === 1) { %>
+			<img crossorigin="anonymous" src="<%= project.images[0].path %>" class="card-img-top"
+				 alt="project image">
+			<% } else { %>
+			<img crossorigin="anonymous" src="<%= imgSrc %>" class="card-img-top" alt="Image of the project">
+			<% } %>
+			<div class="card-body">
+				<h5 class="card-title"><%= project.title %></h5>
+				<p class="card-text">A <%= project.subject %> project <br><%= project.description %></p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Created by <%= project.owner.username %> of <%= project.grade %> <%= project.section %>
+					<br>
+					<i>(Academic year <%= project.year %> - <%= project.year + 1 %>)</i>
+				</li>
+				<li class="list-group-item">Created on <%= project.timeCreated %></li>
+			</ul>
+			<div class="card-body">
+
+				<% if(currentUser && (project.owner.equals(currentUser._id) || currentUser.isAdmin == true)) { %>
+				<!-- < % if(currentUser && (project.owner.equals(currentUser._id)) { %> -->
+				<div class="div">
+					<a href="/projects/<%= project._id %>/edit" class="btn btn-info">Edit project</a>
+					<!-- Only for admin staff (Approving and deleting projects) -->
+					<% if(currentUser && currentUser.isAdmin == true) { %>
+
+					<form class="d-inline" action="/projects/<%= project._id %>?_method=DELETE" method="POST">
+						<button class="btn btn-danger" onclick="deleteFunction(event)">Delete project</button>
+					</form>
+
+					<div class="mt-1">
+						<% if(project.isApproved == false) { %>
+						<form class="d-inline" action="/projects/<%= project._id %>/approve" method="POST">
+							<button class="btn btn-success">Approve project</button>
+						</form>
+						<% } %>
+					</div>
+					<% } %>
+				</div>
+				<% } %>
+				<a href="/projects" class="card-link">Go back</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6" id="secondDiv">
+		<% if(currentUser && currentUser.isAdmin == true) { %>
+		<h1 id="commenth1">Add a comment</h1>
+		<form action="/projects/<%= project._id %>/comments" method="POST" class="needs-validation" novalidate>
+
+			<!-- <div class="mb-3">
+				<label for="rating">Rating</label>
+				<input class="form-range" type="range" name="comment[rating]" min="1" max="5">
+			</div> -->
+
+			<div>
+				<fieldset class="starability-grow">
+					<input type="radio" id="first-rate1" name="comment[rating]" value="1" checked />
+					<label for="first-rate1" title="1 star">1 star</label>
+					<input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+					<label for="first-rate2" title="2 stars">2 stars</label>
+					<input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+					<label for="first-rate3" title="3 stars">3 stars</label>
+					<input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+					<label for="first-rate4" title="4 stars">4 stars</label>
+					<input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+					<label for="first-rate5" title="5 stars">5 stars</label>
+				</fieldset>
+			</div>
+
+			<div class="mb-3">
+				<textarea type="text" class="form-control" id="commentBody" placeholder="Type your comment here..."
+						  name="comment[body]" required></textarea>
+				<div class="valid-feedback">
+					Looks good!
+				</div>
+				<div class="invalid-feedback">
+					Comment cannot be blank!
+				</div>
+			</div>
+			<button class="btn btn-primary mb-3" id="commentBtn">Add comment</button>
+		</form>
+		<% } %>
+
+		<% if(project.comments.length > 0) { %>
+		<h1 id="commenth1">All comments</h1>
+		<!-- DISPLAYING COMMENTS -->
+
+		<div class="accordion mb-3" id="mainAccordion">
+			<div class="accordion " id="mainAccordion">
+				<% for(let a = 0; a < project.comments.length; a++) { %>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading<%= a %>">
+						<button id="button<%= a %>" class="accordion-button" type="button" data-bs-toggle="collapse"
+								data-bs-target="#collapse<%= a %>">Comment by <%= project.comments[a].username %></button>
+					</h2>
+					<div id="collapse<%= a %>" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+						<div class="accordion-body">
+							<% if(currentUser && (project.comments[a].author._id.equals(currentUser._id))) { %>
+							<form class="validated-form d-inline"
+								  action="/projects/<%= project._id %>/comments/<%= project.comments[a]._id %>?_method=PUT"
+								  method="POST" novalidate>
+								<% } %>
+								<div class="mb-3" id="starsData">
+									<p class="starability-result card-title" data-rating="<%= project.comments[a].rating %>">
+										<%= project.comments[a].rating %>
+									</p>
+								</div>
+								<div class="mb-3" id="inputStars">
+									<fieldset class="starability-grow" style="display: none;">
+										<input type="radio" id="new-rate1" name="comment[rating]" value="1" checked />
+										<label for="new-rate1" title="1 star">1 star</label>
+										<input type="radio" id="new-rate2" name="comment[rating]" value="2" />
+										<label for="new-rate2" title="2 stars">2 stars</label>
+										<input type="radio" id="new-rate3" name="comment[rating]" value="3" />
+										<label for="new-rate3" title="3 stars">3 stars</label>
+										<input type="radio" id="new-rate4" name="comment[rating]" value="4" />
+										<label for="new-rate4" title="4 stars">4 stars</label>
+										<input type="radio" id="new-rate5" name="comment[rating]" value="5" />
+										<label for="new-rate5" title="5 stars">5 stars</label>
+									</fieldset>
+								</div>
+								<div class="mb-3">
+									<textarea class="form-control showTextarea" name="comment[body]" readonly
+											  required><%= project.comments[a].body %></textarea>
+									<div class="valid-feedback">Looks good!</div>
+									<div class="invalid-feedback">Comment cannot be blank!</div>
+								</div>
+								<% if(currentUser && (project.comments[a].author._id.equals(currentUser._id))) { %>
+
+								<form class="d-inline" action="/projects/<%= project._id %>/comments/<%= project.comments[a]._id %>?_method=PUT"
+									  method="POST">
+									<button class="btn btn-primary btn-sm" onclick="editFunction(event)">Edit comment</button>
+								</form>
+							</form>
+							<form class="d-inline" action="/projects/<%= project._id %>/comments/<%= project.comments[a]._id %>?_method=DELETE"
+								  method="POST">
+								<button class="btn btn-danger btn-sm" onclick="deleteFunction(event)">Delete comment</button>
+							</form>
+							<% } %>
+							<div class="text-muted" style="margin-top: 20px;"><%= project.comments[a].timeCreated %> </div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+
+		</div>
+		<div style="text-align: right;">
+			<% if(page != 0) { %>
+			<a href="/projects/<%= project._id %>?page=<%= page - 1 %>" class="btn btn-primary">Previous Page</a>
+			<% } %>
+			<a href="/projects/<%= project._id %>?page=<%= page + 1 %>" class="btn btn-primary" style="margin-left: 10px;">Next Page</a>
+		</div>
+		<% } else { %>
+		<h1 id="commenth1" class="text-center text-muted"> <i>No comments (yet) </i> </h1>
+		<% } %>
+	</div>
+</div>
+
+<script>
+	// const jsonproject = < % - JSON.stringify(project) %>
+	// console.log(jsonproject)
+	const firstCollapse = document.querySelector('#collapse0');
+	if (firstCollapse)
+		firstCollapse.classList.add('show');
+	const firstImageDiv = document.querySelector('#imageDiv0')
+	const firstIndicator = document.querySelector('#indicator0')
+	if (firstImageDiv) {
+		firstImageDiv.classList.add('active');
+		firstIndicator.classList.add('active');
+
+	}
+</script>
+
+
+<script src="/scripts/editComment.js"></script>

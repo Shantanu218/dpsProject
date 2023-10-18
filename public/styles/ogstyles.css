@@ -1,0 +1,105 @@
+.container {
+	margin-top: 20px !important;
+}
+
+h1 {
+	text-align: center;
+}
+
+.card-img-top {
+	aspect-ratio: 4 / 3;
+	width: 100%;
+}
+
+.card-text {
+	word-wrap: break-word;
+}
+
+.card-body {
+	padding: 11px;
+}
+
+.btn-primary,
+.btn-warning,
+.btn-danger {
+	margin-top: 5px;
+}
+
+.showTextarea {
+	height: 100px;
+	resize: none;
+}
+
+.accordion-body {
+	padding: 16px;
+}
+
+#bookh1,
+#commenth1 {
+	text-align: center;
+	font-size: 25px;
+	margin-bottom: 15px;
+}
+
+#newTextarea {
+	height: 150px;
+	resize: none;
+}
+
+#newLabel {
+	text-align: center;
+	display: flex;
+	margin: auto;
+	float: left;
+	offset: 3;
+}
+
+#commentBtn {
+	margin: 10px 0;
+}
+
+.col-lg-6 {
+	margin: auto;
+	padding: 40px
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+	#commenth1 {
+		margin-top: 15px;
+	}
+
+	.card {
+		max-width: 80%;
+		margin: auto;
+	}
+
+	#secondDiv {
+		max-width: 80%;
+		margin: auto;
+	}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media (min-width: 600px) {
+	#commenth1 {
+		margin-top: 15px;
+	}
+
+	.card {
+		max-width: 80%;
+		margin: auto;
+	}
+
+	.card-img-top {
+		aspect-ratio: 16 / 10;
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media (min-width: 768px) {
+	#commenth1 {
+		margin-top: 0px;
+		text-align: left;
+	}
+}
