@@ -2,6 +2,9 @@ const catchAsync = require('../utils/catchAsync');
 const expressErr = require('../utils/expressErr');
 const User = require('../models/user');
 
+// // REQUIRING PROCESS.ENV FILE AND CONFIGURING IT
+require('dotenv').config();
+
 
 // REGISTER ROUTE (GET)
 module.exports.registerPage = (req, res) => {
@@ -16,7 +19,7 @@ module.exports.register = catchAsync(async (req, res, next) => {
 
 		if (secret !== process.env.DPS_SECRET) {
 			req.flash('error', 'Invalid Credentials. Please try again later.')
-			return res.redirect('/login')
+			return res.redirect('/register')
 		}
 
 		const user = new User({ email, username });
@@ -29,8 +32,15 @@ module.exports.register = catchAsync(async (req, res, next) => {
 			res.redirect('/projects')
 		})
 	} catch (err) {
-		console.log(err);
-		req.flash('error', err.message);
+		if (err.message.includes('A user with the given')) {
+			req.flash('error', err.message);
+		} else if (err.message.includes('E11000 duplicate key error collection:')) {
+			const keyValue = Object.keys(err.keyValue)[ 0 ];
+			req.flash('error', `A user with the given ${keyValue} already exists. Please try a different ${keyValue}.`);
+		} else {
+			console.log(err, ' Error at controllers/users.js (line 66)');
+			req.flash('error', 'There was an error registering. Please try again later.');
+		}
 		return res.redirect('register');
 	}
 })

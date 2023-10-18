@@ -2,7 +2,7 @@
 const catchAsync = require('../utils/catchAsync');
 
 // REQUIRING PROCESS.ENV FILE AND CONFIGURING IT
-// require('dotenv').config();
+require('dotenv').config();
 
 // JOI SCHEMA VALIDATION
 const { joiCommentSchema } = require('../joiSchemas');

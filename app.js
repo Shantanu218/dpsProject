@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, '/public'))); // To serve static ass
 
 app.use(mongoSanitize());
 
+// // REQUIRING PROCESS.ENV FILE AND CONFIGURING IT
 require('dotenv').config();
 
 // const mongoUrl = 'mongodb://127.0.0.1:27017/science';
