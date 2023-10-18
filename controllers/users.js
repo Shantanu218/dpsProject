@@ -16,6 +16,12 @@ module.exports.registerPage = (req, res) => {
 module.exports.register = catchAsync(async (req, res, next) => {
 	try {
 		const { email, username, password, secret } = req.body;
+		console.log(req.body);
+		console.log(secret);
+		console.log(secret !== process.env.DPS_SECRET);
+		console.log(secret !== 'DPSIS123!');
+
+
 
 		if (secret !== 'DPSIS123!') {
 			req.flash('error', 'Invalid Credentials. Please try again later.')
